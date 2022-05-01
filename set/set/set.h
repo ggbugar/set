@@ -9,6 +9,7 @@ struct Node
 	T data;
 	Node<T> *next;  //<T>也可以省略
 };
+
 /*
 集合性质：
 1.确定性
@@ -16,13 +17,14 @@ struct Node
 3.无序性
 */
 
-
 template <typename T>
 class set
 {
 public:
+	Node<T> *first;//单链表的头指针	
+public:
 	set();//无参构造函数
-	set(T data[], int n);
+	set(T data[], int n);//
 	set(const set& s);//拷贝构造函数
 	set& operator=(const set& s)
 	{
@@ -34,7 +36,7 @@ public:
 
 		first = new Node<T>;
 		first->next = NULL;
-		if (!(s.first.next))//s为空集合
+		if (!(s.first->next))//s为空集合
 		{
 			first->next = NULL;
 		}
@@ -61,47 +63,87 @@ public:
 		}
 		return *this;
 	}
+	bool operator==(set s)
+	{
+		if (this->length() != s.length())
+			return false;
+
+		Node<T> *temp = this->first;
+		Node<T> *stemp = s.first;
+		while (temp->next)
+		{
+			temp = temp->next;
+			stemp = s.first;
+			while (stemp->next)
+			{
+				stemp = stemp->next;
+				if (temp->data == stemp->data)
+					break;
+			}
+			if (temp->data != stemp->data)
+				return false;
+		}
+		return true;
+	}
 	~set();//析构函数
-	
 	
 	bool clearSet();//清空集合元素
 	bool isEmpty();//判断集合是否为空
 	int length();//返回集合元素个数
 
-
 	void viewSetElem();//查看集合所有元素
 	T getElem(int i);//返回第i个元素
 	
-	
 	bool addElem(T data);//
 	bool deleteElem(T data);//
-	bool deleteElem();
+	void deleteElemByIndex(int index);//
+
+	void erase(int i, int j);//delete the element between index i and index ,j:[i,j),which will delete j-i elements 
+	void eraseFirst();//delete the first element of the set
+	void eraseLast();//delete the last element of the set
 
 	bool searchElem(T data);//
-	bool updateElem(T oldValue, T newValue);//delete then add
+	void updateElem(T oldValue, T newValue);//
+	void updateElemByIndex(int index, T newValue);//
 	
+	bool equals(set<T> s);//"=="
+	bool belongsTo(set<T> s);//"belongs to" ;a subset of
 
-
-	bool unionSet(const set<T>& s);//
-	friend set& unionSet(const set<T>& s1,const set<T>& s2);//
-	friend bool unionSet(const set<T>& a, const set<T>& b, const set<T>& c);//
-	
-
+	//set operations:
+	//intersection set of a set
+	void Intersection(set<T> s);//intersection:this = this ^ s
+	friend set& Intersection(set<T> s1,set<T> s2);//intersection:s = s1 ^ s2
+	friend void Intersection(set<T> a,set<T> b,set<T>& c);//intersection:c = a ^ b
+	//union set of a set
+	void unionSet(set<T> s);//union set:this = this U s
+	friend set& unionSet(set<T> s1, set<T> s2);//union set:s = s1 U s2
+	friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
+	//intersection set of a set
+	void diffSet(set<T> s);//Difference sett:this = this - s
+	friend set& Intersection(set<T> s1, set<T> s2);//Difference set:s = s1 - s2
+	friend void Intersection(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
+	//complement set of a set
+	set<T> complementSet(set<T> u);//complement set:this = U - this
+	friend set& complementSet(set<T> u, set<T> s );//Difference set:cset = u - s
+	friend void complementSet(set<T> u, set<T> s, set<T>& cset);//Difference cset:c = U - s
 
 	T getMaxElem();//返回最大元素
 	T getMinElem();//返回最小元素
-	bool sortAsc();
-	bool sortDsc();
+	bool sortAsc();//sort the set 
+	bool sortDsc();//sort the set
 	T* toArray();//转换为数组，返回一个数组
+	void toArray(T* arr);//
 	//void forEach();
 
-public:
-	Node<T> *first;//单链表的头指针	
+
 };
 
-/*
-基本操作
-*/
+
+
+
+
+
+
 template <typename T>
 bool set<T>::isEmpty()
 {
@@ -142,17 +184,18 @@ template <typename T>
 void set<T>::viewSetElem()
 {
 	Node<T> *temp=first;
-	while (temp->next)
+	while (temp->next!=NULL)
 	{
 		temp = temp->next;
 		cout << temp->data<<" ";
 	}
+	cout << endl;
 }
 
 template <typename T>
 T set<T>::getElem(int i)
 {
-	if (i<1 || i>this.length())
+	if (i<1 || i>this->length())
 		return NULL;
 	Node<T>* temp = first;
 	while (i>0)
@@ -167,13 +210,13 @@ template <typename T>
 T set<T>::getMaxElem()
 {
 	if (this->isEmpty())
-		exit(error);
-	Node<T> temp=first->next;
-	T max = temp.data;
-	while (temp.next)
+		exit(0);
+	Node<T> *temp=first->next;
+	T max = temp->data;
+	while (temp->next)
 	{
-		temp = temp.next;
-		max = max > temp.data ? max : temp.data;
+		temp = temp->next;
+		max = max > temp->data ? max : temp->data;
 	}
 	return max;
 }
@@ -182,13 +225,13 @@ template <typename T>
 T set<T>::getMinElem()
 {
 	if (this->isEmpty())
-		exit(error);
-	Node<T> temp = first->next;
-	T min = temp.data;
-	while (temp.next)
+		exit(0);
+	Node<T> *temp = first->next;
+	T min = temp->data;
+	while (temp->next)
 	{
-		temp = temp.next;
-		min = max < temp.data ? max : temp.data;
+		temp = temp->next;
+		min = min < temp->data ? min : temp->data;
 	}
 	return min;
 }
@@ -247,18 +290,32 @@ template <typename T>
 T* set<T>::toArray()
 {
 	if (this->isEmpty())
-		exit(error);
+		return NULL;
 
 	T* array = new T[this->length()];
-	Node<T> temp = this->first->next;
-	for (int i = 0; i < this.length();i++)
+	Node<T> *temp = this->first->next;
+	for (int i = 0; i < this->length();i++)
 	{
-		array[i] = temp.data;
-		temp = temp.next;
+		array[i] = temp->data;
+		temp = temp->next;
 	}
 	return array;
 }
 
+template <typename T>
+void set<T>::toArray(T* arr)
+{
+	if (this->isEmpty())
+		return;
+	delete[] arr;
+	arr = new T[this->length()];
+	Node<T> *temp = this->first->next;
+	for (int i = 0; i < this->length(); i++)
+	{
+		array[i] = temp->data;
+		temp = temp->next;
+	}
+}
 
 template <typename T>
 set<T>::set(){
@@ -277,8 +334,9 @@ set<T>::set(T data[], int n){
 	{
 		
 		Node<T>* temp = new Node<T>;
-		temp->data = data[i];
 		temp->next = NULL;
+		temp->data = data[i];
+
 		if (first->next==NULL)
 		{
 			first->next = temp;
@@ -287,7 +345,6 @@ set<T>::set(T data[], int n){
 		{
 			temp->next = first->next;
 			first->next = temp;
-
 		}
 	}
 }
@@ -297,7 +354,7 @@ set<T>::set(const set& s)
 {	//拷贝构造函数
 	first = new Node<T>;
 	first->next = NULL;
-	if (!(s.first.next))//s为空集合
+	if (!(s.first->next))//s为空集合
 	{
 		first->next = NULL;
 	}
@@ -327,18 +384,16 @@ set<T>::set(const set& s)
 template <typename T>
 set<T>::~set(){
 	//
-	Node<T> *temp = first;
-	do 
+	Node<T> *temp;
+	while (first->next)
 	{
 		temp = first->next;
-		delete first;
-		first = temp;
-	} while (first->next);
+		first->next = temp->next;
+		delete temp;
+	}
+	delete first;
 }
 
-/*
-基本操作
-*/
 template <typename T>
 bool set<T>::addElem(T data)
 {
@@ -349,7 +404,6 @@ bool set<T>::addElem(T data)
 	this->first->next = temp;
 	return true;
 }
-
 
 template <typename T>
 bool set<T>::deleteElem(T data)
@@ -374,10 +428,27 @@ bool set<T>::deleteElem(T data)
 		return true;
 }
 
+template <typename T>
+void set<T>::deleteElemByIndex(int index)
+{
+	if (index<1 || index>this->length())
+		return;
+	if (this->isEmpty())
+		return ;
+	
+	Node<T> *temp = first;
+	while (--index!=0)
+	{
+		temp = temp->next;
+	}
+	Node<T> *t = temp->next;
+	temp->next = t->next;
+	delete t;
+}
 
 template <typename T>
 bool set<T>::searchElem(T data)
-{
+{	//
 	if (isEmpty())
 		return false;
 	Node<T> *temp = first;
@@ -391,13 +462,125 @@ bool set<T>::searchElem(T data)
 		return false;
 }
 
+template <typename T>
+void set<T>::updateElem(T oldValue, T newValue)
+{
+	if (this->isEmpty())
+		return;
+	Node<T> *temp = first->next;
+	while (oldValue!=temp->data&&temp->next!=NULL)
+	{
+		temp = temp->next;
+	}
+	if (oldValue == temp->data)
+	{
+		temp->data = newValue;
+	}
+	else if (oldValue != temp->data)//oldValue not exist
+	{
+		return;
+	}
+}
 
 template <typename T>
-bool set<T>::updateElem(T oldValue, T newValue)
+void set<T>::updateElemByIndex(int index, T newValue)
 {
-
-
+	if (index<1 || index>this->length())//Index Out of Bounds
+		return;
+	if (this->isEmpty())//
+		return;
+	Node<T> *temp = first;
+	do 
+	{
+		temp = temp->next;
+		index--;
+	} while (index!=0);
+	temp->data = newValue;
 }
+
+template <typename T>
+bool set<T>::equals(set<T> s)
+{
+	if (this->length() != s.length())
+		return false;
+
+	Node<T> *temp = this->first;
+	Node<T> *stemp = s.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		stemp = s.first;
+		while (stemp->next)
+		{
+			stemp = stemp->next;
+			if (temp->data == stemp->data)
+				break;
+		}
+		if (temp->data != stemp->data)
+			return false;
+	}
+	return true;
+}
+
+template <typename T>
+bool set<T>::belongsTo(set<T> s)
+{
+	if (this->length() > s.length())
+		return false;
+
+	Node<T> *temp = this->first;
+	Node<T> *stemp = s.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		stemp = s.first;
+		while (stemp->next)
+		{
+			stemp = stemp->next;
+			if (temp->data == stemp->data)
+				break;
+		}
+		if (temp->data != stemp->data)
+			return false;
+	}
+	return true;
+}
+
+template <typename T>//unfilish
+set<T> set<T>::complementSet(set<T> u)
+{
+	if (!(this->belongsTo(u)))
+		return NULL;
+	set<T> cSet = new set<T>;
+	cSet.first=NULL;
+
+	
+	Node<T> *utemp = u.first;
+
+	while (utemp->next)
+	{
+		utemp = utemp->next;
+		Node<T> *temp = this->first;
+		while (temp->next)
+		{
+			temp = temp->next;
+			if (temp->data == utemp->data)
+				break;
+		}
+		if (temp->data == utemp->data)
+			continue;
+		else
+		{
+			Node<T> *t;
+			t->data = utemp->data;
+			t->next = NULL;
+			cSet.addElem(t);
+		}
+	}
+	return cSet;
+}
+
+
 
 
 

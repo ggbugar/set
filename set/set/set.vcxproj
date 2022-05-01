@@ -77,7 +77,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="set.h" />
-    <ClInclude Include="SetByLIst.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="set.cpp" />
