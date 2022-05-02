@@ -111,21 +111,21 @@ public:
 
 	//set operations:
 	//intersection set of a set
-	void Intersection(set<T> s);//intersection:this = this ^ s
-	friend set& Intersection(set<T> s1,set<T> s2);//intersection:s = s1 ^ s2
-	friend void Intersection(set<T> a,set<T> b,set<T>& c);//intersection:c = a ^ b
+	//void IntersectionSet(set<T> s);//intersection:this = this ^ s
+	friend void IntersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
+	friend set& IntersectionSet(set<T> s1, set<T> s2);//intersection:s = s1 ^ s2
 	//union set of a set
-	void unionSet(set<T> s);//union set:this = this U s
+	//void unionSet(set<T> s);//union set:this = this U s
+	extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	friend set& unionSet(set<T> s1, set<T> s2);//union set:s = s1 U s2
-	friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	//intersection set of a set
-	void diffSet(set<T> s);//Difference sett:this = this - s
-	friend set& Intersection(set<T> s1, set<T> s2);//Difference set:s = s1 - s2
-	friend void Intersection(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
+	//void diffSet(set<T> s);//Difference sett:this = this - s
+	extern friend void diffSet(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
+	friend set& diffSet(set<T> s1, set<T> s2);//Difference set:s = s1 - s2
 	//complement set of a set
-	set<T> complementSet(set<T> u);//complement set:this = U - this
-	friend set& complementSet(set<T> u, set<T> s );//Difference set:cset = u - s
-	friend void complementSet(set<T> u, set<T> s, set<T>& cset);//Difference cset:c = U - s
+	//set<T> complementSet(set<T> u);//complement set:this = U - this
+	extern friend void complementSet(set<T> u, set<T> s, set<T>& c);//Difference cset:c = U - s
+	friend set& complementSet(set<T> u, set<T> s);//Difference set: = u - s
 
 	T getMaxElem();//返回最大元素
 	T getMinElem();//返回最小元素
@@ -133,14 +133,8 @@ public:
 	bool sortDsc();//sort the set
 	T* toArray();//转换为数组，返回一个数组
 	void toArray(T* arr);//
-	//void forEach();
-
 
 };
-
-
-
-
 
 
 
@@ -156,6 +150,8 @@ bool set<T>::isEmpty()
 template <typename T>
 bool set<T>::clearSet()
 {
+	if (this->isEmpty())
+		return true;
 	Node<T>* temp;
 	while (first->next)
 	{
@@ -410,21 +406,19 @@ bool set<T>::deleteElem(T data)
 {
 	if (this->isEmpty())
 		return true;
+	if (!(this->searchElem(data)))
+		return true;
 
 	Node<T> *temp=first;
-	while (temp->next&&temp->next->data!=data)
+	while (temp->next)
 	{
+		if (data == temp->next->data)
+			break;
 		temp = temp->next;
 	}
-
-	if (data == temp->next->data)
-	{
 		Node<T> *t = temp->next;
 		temp->next = t->next;
 		delete t;
-		return true;
-	}
-	else
 		return true;
 }
 
@@ -452,14 +446,13 @@ bool set<T>::searchElem(T data)
 	if (isEmpty())
 		return false;
 	Node<T> *temp = first;
-	while (temp->next&&temp->next->data!=data)
+	while (temp->next)
 	{
 		temp = temp->next;
+		if (data==temp->data)
+			return true;
 	}
-	if (data == temp->next->data)
-		return true;
-	else
-		return false;
+	return false;
 }
 
 template <typename T>
@@ -546,43 +539,109 @@ bool set<T>::belongsTo(set<T> s)
 	return true;
 }
 
-template <typename T>//unfilish
-set<T> set<T>::complementSet(set<T> u)
-{
-	if (!(this->belongsTo(u)))
-		return NULL;
-	set<T> cSet = new set<T>;
-	cSet.first=NULL;
-
-	
-	Node<T> *utemp = u.first;
-
-	while (utemp->next)
+template <typename T>
+void IntersectionSet(set<T> a, set<T> b, set<T>& c)
+{	//call:Intersection<T>(s,b,c)
+	if (a.isEmpty()||b.isEmpty())
 	{
-		utemp = utemp->next;
-		Node<T> *temp = this->first;
-		while (temp->next)
+		c.clearSet();
+		return;
+	}
+	if (a.equals(b))
+	{
+		c = a;
+		return;
+	}
+
+	if (!c.isEmpty())
+	{
+		c.clearSet();
+	}
+	Node<T> *temp = a.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (b.searchElem(temp->data))
 		{
-			temp = temp->next;
-			if (temp->data == utemp->data)
-				break;
-		}
-		if (temp->data == utemp->data)
-			continue;
-		else
-		{
-			Node<T> *t;
-			t->data = utemp->data;
-			t->next = NULL;
-			cSet.addElem(t);
+			c.addElem(temp->data);
 		}
 	}
-	return cSet;
 }
 
+template <typename T>
+void unionSet(set<T> a, set<T> b, set<T>& c)
+{	//call:unionSet<T>(s,b,c)
+	if (a.isEmpty()||a.equals(b))
+	{
+		c = b;
+		return;
+	}
+	if (b.isEmpty())
+	{
+		c = b;
+		return;
+	}
 
+	c = a;
+	Node<T>* temp = b.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (!c.searchElem(temp->data))
+		{
+			c.addElem(temp->data);
+		}
+	}
+}
 
+template <typename T>
+void diffSet(set<T> a, set<T> b, set<T>& c)
+{	//call:diffSet<T>(a,b,c)
+	if (a.isEmpty())
+	{
+		c.clearSet();
+		return;
+	}
+	if (b.isEmpty())
+	{
+		c = a;
+		return;
+	}
 
+	c = a;
+	Node<T>* temp = b.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (c.searchElem(temp->data))
+		{
+			c.deleteElem(temp->data);
+		}
+	}
+}
 
+template <typename T>
+void complementSet(set<T> u, set<T> s, set<T>& c)
+{	//call:complementSet<T>(u,s,c)
+	if (!s.belongsTo(u)||u.isEmpty())
+	{
+		exit(0);
+	}
+	if (s.isEmpty())
+	{
+		c = u;
+		return;
+	}
+	c = u;
+	Node<T>* temp = s.first;
+	while (temp->next)
+	{
+		temp = temp->next;
+		if (u.searchElem(temp->data))
+		{
+			c.deleteElem(temp->data);
+		}
+	}
+}
 
 
