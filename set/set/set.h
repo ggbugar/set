@@ -103,7 +103,8 @@ public:
 	void updateElemByIndex(int index, T newValue);//update the no.i element
 
 	//additional operations
-	void erase(int begin, int end);//delete the element between index i and index ,j:[i,j),which will delete j-i elements 
+	void erase(int begin, int end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
+	void eraseNElem(int begin, int n);//delete n elements from begin to begin+n;[begin,begin+n)
 	void eraseFirst();//delete the first element of the set
 	void eraseLast();//delete the last element of the set
 	T getMaxElem();//return the biggest one
@@ -411,20 +412,83 @@ void set<T>::updateElemByIndex(int index, T newValue)
 
 template <typename T>
 void set<T>::erase(int begin, int end)
-{
+{	//[begin,end]
+	if (begin<1 || begin>this->length() || end<1 || end>this->length())
+		return;
+	if (end < begin)
+		return;
+	if (end==begin)
+	{
+		this->deleteElemByIndex(begin);
+		return;
+	}
+	int count = 0;
+	Node<T>* temp = first;
+	while (temp->next)
+	{
+		count++;
+		if (count == begin)
+			break;
+		temp = temp->next;
+	}
+	while (count++<=end)
+	{
+		Node<T>* t = temp->next;
+		temp->next = t->next;
+		delete t;
+	}
+	/*while (end-->=begin) 
+	{
+	this->deleteElemByIndex(begin);
+	}*/
+}
 
+template <typename T>
+void set<T>::eraseNElem(int begin, int n)
+{
+	if (begin<1||n>this->length()||begin+n>this->length())
+		return;
+	int count = 0;
+	Node<T>* temp = first;
+	while (temp->next)
+	{
+		count++;
+		if (count == begin)
+			break;
+		temp = temp->next;
+	}
+
+	while (count++ <= begin+n-1)
+	{
+		Node<T>* t = temp->next;
+		temp->next = t->next;
+		delete t;
+	}
 }
 
 template <typename T>
 void set<T>::eraseFirst()
 {
-
+	if (this->isEmpty())
+		return;
+	Node<T> *temp = first->next;
+	first->next = temp->next;
+	delete temp;
 }
 
 template <typename T>
 void set<T>::eraseLast()
 {
-
+	if (this->isEmpty())
+		return;
+	Node<T> *temp = first;
+	while (temp->next->next)
+	{
+		temp = temp->next;
+	}
+	Node<T> *todel = temp->next;
+	temp->next = NULL;
+	delete todel;
 }
 
 template <typename T>

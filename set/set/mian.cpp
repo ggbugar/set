@@ -8,9 +8,11 @@ int main(){
 
 	set<int> s2(s);
 	s2.deleteElemByIndex(1);
+	s2.viewSetElem();
 	s2.deleteElem(2);
 	s2.viewSetElem();
-
+	s2.eraseNElem(2, 4);
+	s2.viewSetElem();
 
 	/*s.sortAsc();
 	s.viewSetElem();
@@ -84,10 +86,6 @@ int main(){
 	s.addElem(100);
 	complementSet<int>(s, s2, c);
 	c.viewSetElem();*/
-
-
-
-
 
 	return 0;
 }
