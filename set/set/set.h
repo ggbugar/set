@@ -10,13 +10,6 @@ struct Node
 	Node<T> *next;  //<T>也可以省略
 };
 
-/*
-集合性质：
-1.确定性
-2.互异性
-3.无序性
-*/
-
 template <typename T>
 class set
 {
@@ -141,21 +134,27 @@ set<T>::set(T data[], int n){
 	//尚未考虑重复元素
 	first = new Node<T>;
 	first->next = NULL;
+	bool checkRepeat = false;
+	Node<T>* check;
 	for (int i = 0; i < n; i++)
 	{
-		/*int  isRepeation = 0;
-		Node<T>* checkRepeation = first;
-		while (checkRepeation->next)
+		checkRepeat = false;
+		check = first;
+		while (check->next)
 		{
-		checkRepeation = first->next;
-		if (data[i] == checkRepeation->data)
+			check = check->next;
+			if (data[i]==check->data)
+			{
+				checkRepeat = true;
+				break;
+			}
+		}
+		if (checkRepeat)
 		{
-		isRepeation = 1;
-		break;
+			checkRepeat = false;
+			continue;
 		}
-		}
-		if (1==isRepeation)
-		continue;*/
+
 		Node<T>* temp = new Node<T>;
 		temp->next = NULL;
 		temp->data = data[i];
