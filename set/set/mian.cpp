@@ -41,32 +41,32 @@ int main(){
 	cout << s.getMaxElem() << endl;
 	cout << s.getMinElem() << endl;*/
 
-	int *a;
+	/*int *a;
 	a = s.toArray();
 
 	set<int> s3(a, 10);
 	s3.viewSetElem();
 	if (s3.equals(s))
 	{
-		cout << "s3 equals s" << endl;
+	cout << "s3 equals s" << endl;
 	}
 	if (s2 == s)
 	{
-		cout << "s2 equals s";
+	cout << "s2 equals s";
 	}
 	else
 	{
-		cout << "s2 do not equals s" << endl;
+	cout << "s2 do not equals s" << endl;
 	}
 
 
 	if (s2.belongsTo(s))
 	{
-		cout << "s2 belongs to s,s2 is a subset of s." << endl;
+	cout << "s2 belongs to s,s2 is a subset of s." << endl;
 	}
 	else
 	{
-		cout << "s2 does not belong to s" << endl;
+	cout << "s2 does not belong to s" << endl;
 	}
 
 
@@ -83,17 +83,7 @@ int main(){
 
 	s.addElem(100);
 	complementSet<int>(s, s2, c);
-	c.viewSetElem();
-
-
-
-
-
-
-
-
-
-
+	c.viewSetElem();*/
 
 
 
