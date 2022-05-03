@@ -10,6 +10,15 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Integer.h" />
+    <ClInclude Include="set.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Integer.cpp" />
+    <ClCompile Include="testInt.cpp" />
+    <ClCompile Include="testInteger.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DA103AF4-888E-4CD2-8898-6A915C2DF0BD}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -75,14 +84,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="Integer.h" />
-    <ClInclude Include="set.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Integer.cpp" />
-    <ClCompile Include="test.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

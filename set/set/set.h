@@ -7,7 +7,7 @@ template <typename T>
 struct Node
 {
 	T data;
-	Node<T> *next;  //<T>也可以省略
+	Node<T> *next;
 };
 
 template <typename T>
@@ -48,7 +48,7 @@ public:
 				}
 				else
 				{
-					temp->next = first->next;//头插法
+					temp->next = first->next;//head insert
 					first->next = temp;
 				}
 			}
@@ -296,6 +296,7 @@ template <typename T>
 void set<T>::viewSetElem()
 {	//this function is used for viewing the set's element.
 	//I use it to test my functions.
+	//this requires the << overloaded.
 	if (this->isEmpty())
 	{
 		cout << "the set is empty." << endl;

@@ -23,10 +23,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test.cpp">
+    <ClCompile Include="Integer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Integer.cpp">
+    <ClCompile Include="testInt.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="testInteger.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

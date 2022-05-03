@@ -1,20 +1,20 @@
-#include "set.h"
 #include "Integer.h"
-//functions test
+#include "set.h"
+
 void main(){
 	cout << "functions test:" << endl;
 	//set();//constructor with no parameter
-	set<int> s1;
+	set<Integer> s1;
 	cout << "s1:"; s1.viewSetElem();
-	//set(T data[], int n);//construct set with a array
-	int arr[12] = { 1, 2, 3, 3, 4, 5, 6, 7, 7, 8, 9, 10 };
-	set<int> s2(arr,12);
+	//set(T data[], Integer n);//construct set with a array
+	Integer arr[12] = { 1, 2, 3, 3, 4, 5, 6, 7, 7, 8, 9, 10 };
+	set<Integer> s2(arr, 12);
 	cout << "s2:"; s2.viewSetElem();
 	//set(const set& s);//copy constructor
-	set<int> s3(s2);
+	set<Integer> s3(s2);
 	cout << "s3:"; s3.viewSetElem();
 	//set& operator=(const set& s);
-	set<int>s4 = s1;
+	set<Integer>s4 = s1;
 	cout << "s4:"; s4.viewSetElem();
 	//bool operator==(set s);
 	if (s2 == s1)//false
@@ -49,13 +49,13 @@ void main(){
 		cout << "s2 is a empty set." << endl;
 	else
 		cout << "s2 isn't a empty set." << endl;
-	//int length();//return the number of elements in the set
+	//Integer length();//return the number of elements in the set
 	cout << "s3 has " << s3.length() << " elements" << endl;
-	//T getElem(int i);//return the no.i element
+	//T getElem(Integer i);//return the no.i element
 	cout << "s3:";
-	for (int i = 1; i <= s3.length();i++)
+	for (int i = 1; i <= s3.length(); i++)
 	{
-		cout << s3.getElem(i)<<" ";
+		cout << s3.getElem(i) << " ";
 	}
 	cout << endl;
 	//void viewSetElem();//view set's all elements
@@ -63,13 +63,13 @@ void main(){
 	//bool addElem(T data);//add a element
 	s1.addElem(1);
 	cout << "s1:"; s1.viewSetElem();
-	//void addElem(T data[], int n);//add element with a array.
-	s1.addElem(arr,12);
+	//void addElem(T data[], Integer n);//add element with a array.
+	s1.addElem(arr, 12);
 	cout << "s1:"; s1.viewSetElem();
 	//bool deleteElem(T data);//delete a element
 	s1.deleteElem(1);
 	cout << "s1:"; s1.viewSetElem();
-	//void deleteElemByIndex(int index);//delete a element by index
+	//void deleteElemByIndex(Integer index);//delete a element by index
 	s1.deleteElemByIndex(9);
 	cout << "s1:"; s1.viewSetElem();
 	//bool searchElem(T data);//check whether the element in the set
@@ -85,13 +85,13 @@ void main(){
 	cout << "s3:"; s3.viewSetElem();
 	s3.updateElem(1, 100);
 	cout << "s3:"; s3.viewSetElem();
-	//void updateElemByIndex(int index, T newValue);//update the no.i element
+	//void updateElemByIndex(Integer index, T newValue);//update the no.i element
 	s3.updateElemByIndex(10, 1000);
 	cout << "s3:"; s3.viewSetElem();
-	//void erase(int begin, int end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
+	//void erase(Integer begin, Integer end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
 	s3.erase(1, 3);
 	cout << "s3:"; s3.viewSetElem();
-	//void eraseNElem(int begin, int n);//delete n elements from begin to begin+n;[begin,begin+n)
+	//void eraseNElem(Integer begin, Integer n);//delete n elements from begin to begin+n;[begin,begin+n)
 	s3.eraseNElem(3, 3);
 	cout << "s3:"; s3.viewSetElem();
 	//void eraseFirst();//delete the first element of the set
@@ -101,8 +101,8 @@ void main(){
 	s3.eraseLast();
 	cout << "s3:"; s3.viewSetElem();
 
-	int ano_arr[15] = { 1, -7, 100, 45, 23, 666, 3, 77, 9, 2, 34, 6, 89, -23, 65 };
-	set<int> s5(ano_arr, 15);
+	Integer ano_arr[15] = { 1, -7, 100, 45, 23, 666, 3, 77, 9, 2, 34, 6, 89, -23, 65 };
+	set<Integer> s5(ano_arr, 15);
 	cout << "s5:"; s5.viewSetElem();
 
 	//T getMaxElem();//return the biggest one
@@ -113,11 +113,11 @@ void main(){
 	s5.sortAsc();
 	cout << "s5 sorted by ascending order:"; s5.viewSetElem();
 	//T* toArray();//converse the set into a array,return the array
-	int* toarr = s5.toArray();
+	Integer* toarr = s5.toArray();
 	cout << "toarr:";
 	for (int i = 0; i < s5.length(); i++)
 	{
-		cout << toarr[i]<<" ";
+		cout << toarr[i] << " ";
 	}
 	cout << endl;
 	//bool sortDsc();//sort the set in descending order
@@ -132,16 +132,16 @@ void main(){
 	}
 	cout << endl;
 	//define some set to test set operations functions
-	int u[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-	set<int> U(u,10);
+	Integer u[10] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	set<Integer> U(u, 10);
 	cout << "U:"; U.viewSetElem();
-	int a[7] = { 1, 3, 4, 6, 7, 8, 9 };
-	set<int> A(a, 7);
+	Integer a[7] = { 1, 3, 4, 6, 7, 8, 9 };
+	set<Integer> A(a, 7);
 	cout << "A:"; A.viewSetElem();
-	int b[6] = { 1, 2, 3, 4, 5, 6};
-	set<int> B(b, 6);
+	Integer b[6] = { 1, 2, 3, 4, 5, 6 };
+	set<Integer> B(b, 6);
 	cout << "B:"; B.viewSetElem();
-	set<int> C;
+	set<Integer> C;
 	cout << "C:"; C.viewSetElem();
 	//bool belongsTo(set<T> s);
 	if (B.belongsTo(U))//true
@@ -153,39 +153,19 @@ void main(){
 	else
 		cout << "B does not belong to A." << endl;
 	//friend void IntersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
-	IntersectionSet<int>(A, B, C);
+	IntersectionSet<Integer>(A, B, C);
 	cout << "the intersection set of A and B:"; C.viewSetElem();
 	//extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
-	unionSet<int>(A, B, C);
+	unionSet<Integer>(A, B, C);
 	cout << "the union set of A and B:"; C.viewSetElem();
 	//extern friend void diffSet(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
-	diffSet<int>(A, B, C);
+	diffSet<Integer>(A, B, C);
 	cout << "the difference set of A and B(A-B):"; C.viewSetElem();
-	diffSet<int>(B, A, C);
+	diffSet<Integer>(B, A, C);
 	cout << "the difference set of B and A(B-A):"; C.viewSetElem();
 	//extern friend void complementSet(set<T> u, set<T> s, set<T>& c);//Difference set:c = U - s
-	complementSet<int>(U, A, C);
+	complementSet<Integer>(U, A, C);
 	cout << "the complement of A with respect to U:"; C.viewSetElem();
-	complementSet<int>(U, B, C);
+	complementSet<Integer>(U, B, C);
 	cout << "the complement of B with respect to U:"; C.viewSetElem();
-
-
-
-	Integer i1;
-	Integer i2(10);
-	Integer i3=i2;
-	Integer i1[5] = { i2, i2, i2, i2, i2};
-	set<Integer> i1;
-
-
-
-
-
-
-
-
-
-
-
-
 }
