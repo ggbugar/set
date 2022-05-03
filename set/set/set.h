@@ -28,7 +28,7 @@ public:
 
 		first = new Node<T>;
 		first->next = NULL;
-		if (!(s.first->next))//s为空集合
+		if (!(s.first->next))//if s is a empty set.
 		{
 			first->next = NULL;
 		}
@@ -40,10 +40,9 @@ public:
 				stemp = stemp->next;
 				Node<T> *temp = new Node<T>;
 				temp->data = stemp->data;
-				//temp->next = NULL;
+				temp->next = NULL;
 				if (first->next == NULL)
 				{
-					temp->next = NULL;//尾指针域置空
 					first->next = temp;
 				}
 				else
@@ -235,8 +234,7 @@ bool set<T>::equals(set<T> s)
 
 template <typename T>
 set<T>::~set()
-{
-	//the destructor 
+{	//the destructor 
 	//free memories.
 	Node<T> *temp;
 	while (first->next)
