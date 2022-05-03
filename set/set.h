@@ -7,7 +7,7 @@ template <typename T>
 struct Node
 {
 	T data;
-	Node<T> *next;  //<T>也可以省略
+	Node<T> *next;  //<T> can be ignored.
 };
 
 template <typename T>
@@ -28,7 +28,7 @@ public:
 
 		first = new Node<T>;
 		first->next = NULL;
-		if (!(s.first->next))//s为空集合
+		if (!(s.first->next))
 		{
 			first->next = NULL;
 		}
@@ -40,15 +40,14 @@ public:
 				stemp = stemp->next;
 				Node<T> *temp = new Node<T>;
 				temp->data = stemp->data;
-				//temp->next = NULL;
+				temp->next = NULL;
 				if (first->next == NULL)
 				{
-					temp->next = NULL;//尾指针域置空
 					first->next = temp;
 				}
 				else
 				{
-					temp->next = first->next;//头插法
+					temp->next = first->next;
 					first->next = temp;
 				}
 			}
