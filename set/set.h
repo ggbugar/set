@@ -13,7 +13,7 @@ struct Node
 template <typename T>
 class set
 {
-public:
+private:
 	Node<T> *first;//the head of the list.	
 public:
 	set();//constructor with no parameter
@@ -78,6 +78,8 @@ public:
 	}
 	bool equals(set<T> s);//equal the operator ==
 	~set();//destructor
+	Node<T>* getFirst();//get the first node 
+	void setFirst(Node<T>* head);//set the first node
 	
 	//basic operations
 	bool clearSet();//clear the set,left empty set.
@@ -120,6 +122,23 @@ public:
 	extern friend void complementSet(set<T> u, set<T> s, set<T>& c);//Difference set:c = U - s
 	
 };
+
+template <typename T>
+Node<T>* set<T>::getFirst()
+{
+	if (first)
+		return first;
+	else
+		return NULL;
+}
+
+template <typename T>
+void set<T>::setFirst(Node<T>* head)
+{
+	Node<T>* temp = first;
+	first = head;
+	delete temp;
+}
 
 template <typename T>
 set<T>::set(){
@@ -702,7 +721,7 @@ void IntersectionSet(set<T> a, set<T> b, set<T>& c)
 	{
 		c.clearSet();
 	}
-	Node<T> *temp = a.first;
+	Node<T> *temp = a.getFirst();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -730,7 +749,7 @@ void unionSet(set<T> a, set<T> b, set<T>& c)
 	}
 
 	c = a;
-	Node<T>* temp = b.first;
+	Node<T>* temp = b.getFirst();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -758,7 +777,7 @@ void diffSet(set<T> a, set<T> b, set<T>& c)
 	}
 
 	c = a;
-	Node<T>* temp = b.first;
+	Node<T>* temp = b.getFirst();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -785,7 +804,7 @@ void complementSet(set<T> u, set<T> s, set<T>& c)
 		return;
 	}
 	c = u;
-	Node<T>* temp = s.first;
+	Node<T>* temp = s.getFirst();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -795,5 +814,3 @@ void complementSet(set<T> u, set<T> s, set<T>& c)
 		}
 	}
 }
-
-
