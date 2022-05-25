@@ -93,7 +93,7 @@
 //	//void eraseNElem(int begin, int n);//delete n elements from begin to begin+n;[begin,begin+n)
 //	s3.eraseNElem(3, 3);
 //	cout << "s3:"; s3.viewSetElem();
-//	//void eraseFirst();//delete the first element of the set
+//	//void eraseFirst();//delete the head element of the set
 //	s3.eraseFirst();
 //	cout << "s3:"; s3.viewSetElem();
 //	//void eraseLast();//delete the last element of the set

@@ -14,41 +14,41 @@ template <typename T>
 class set
 {
 private:
-	Node<T> *first;//the head of the list.	
+	Node<T> *head;//A head node that does not hold data elements	
 public:
 	set();//constructor with no parameter
 	set(T data[], int n);//construct set with a array
-	set(const set& s);//copy constructor
+	set(const set& s);//copy constructor,you can init a set by copying another set
 	set& operator=(const set& s)
 	{	//overload the = operator
-		if (first->next!=NULL)
+		if (head->next!=NULL)
 		{
 			this->clearSet();
 		}
 
-		first = new Node<T>;
-		first->next = NULL;
-		if (!(s.first->next))//if s is a empty set.
+		head = new Node<T>;
+		head->next = NULL;
+		if (!(s.head->next))//if s is a empty set.
 		{
-			first->next = NULL;
+			head->next = NULL;
 		}
 		else
 		{
-			Node<T> *stemp = s.first;
+			Node<T> *stemp = s.head;
 			while (stemp->next)
 			{
 				stemp = stemp->next;
 				Node<T> *temp = new Node<T>;
 				temp->data = stemp->data;
 				temp->next = NULL;
-				if (first->next == NULL)
+				if (head->next == NULL)
 				{
-					first->next = temp;
+					head->next = temp;
 				}
 				else
 				{
-					temp->next = first->next;//head insert
-					first->next = temp;
+					temp->next = head->next;//head insert
+					head->next = temp;
 				}
 			}
 		}
@@ -59,12 +59,12 @@ public:
 		if (this->length() != s.length())
 			return false;
 
-		Node<T> *temp = this->first;
-		Node<T> *stemp = s.first;
+		Node<T> *temp = this->head;
+		Node<T> *stemp = s.head;
 		while (temp->next)
 		{
 			temp = temp->next;
-			stemp = s.first;
+			stemp = s.head;
 			while (stemp->next)
 			{
 				stemp = stemp->next;
@@ -78,9 +78,8 @@ public:
 	}
 	bool equals(set<T> s);//equal the operator ==
 	~set();//destructor
-	Node<T>* getFirst();//get the first node 
-	void setFirst(Node<T>* head);//set the first node
-	
+	Node<T>* getHead();//get the head node 
+	void setHead(Node<T>* head);//set the head node
 	//basic operations
 	bool clearSet();//clear the set,left empty set.
 	bool isEmpty();//judge weather the set is a empty set
@@ -100,7 +99,7 @@ public:
 	//additional operations
 	void erase(int begin, int end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
 	void eraseNElem(int begin, int n);//delete n elements from begin to begin+n;[begin,begin+n)
-	void eraseFirst();//delete the first element of the set
+	void eraseFirst();//delete the head element of the set
 	void eraseLast();//delete the last element of the set
 	T getMaxElem();//return the biggest one
 	T getMinElem();//return the smallest one
@@ -124,29 +123,28 @@ public:
 };
 
 
-
 template <typename T>
-Node<T>* set<T>::getFirst()
+Node<T>* set<T>::getHead()
 {
-	if (first)
-		return first;
+	if (head)
+		return head;
 	else
 		return NULL;
 }
 
 template <typename T>
-void set<T>::setFirst(Node<T>* head)
+void set<T>::setHead(Node<T>* head)
 {
-	Node<T>* temp = first;
-	first = head;
+	Node<T>* temp = head;
+	head = head;
 	delete temp;
 }
 
 template <typename T>
 set<T>::set(){
 	//create a empty set
-	first = new Node<T>;
-	first->next = NULL;
+	head = new Node<T>;
+	head->next = NULL;
 }
 
 template <typename T>
@@ -155,15 +153,15 @@ set<T>::set(T data[], int n)
 	//n:the number of elements in the array.
 	//pass a array(data) and the array's length(n) to create a set. 
 	//the set will automatically check repeat elements.
-	first = new Node<T>;//init the head node.
-	first->next = NULL;
+	head = new Node<T>;//init the head node.
+	head->next = NULL;
 	bool checkRepeat = false;
 	Node<T>* check;
 	for (int i = 0; i < n; i++)
 	{
 		//check weather there has repeated element.
 		checkRepeat = false;
-		check = first;
+		check = head;
 		while (check->next)
 		{
 			check = check->next;
@@ -183,14 +181,14 @@ set<T>::set(T data[], int n)
 		temp->next = NULL;
 		temp->data = data[i];
 
-		if (first->next == NULL)
+		if (head->next == NULL)
 		{
-			first->next = temp;
+			head->next = temp;
 		}
 		else
 		{
-			temp->next = first->next;
-			first->next = temp;
+			temp->next = head->next;
+			head->next = temp;
 		}
 	}
 }
@@ -199,29 +197,29 @@ template <typename T>
 set<T>::set(const set& s)
 {	//copy constructor
 	//copy a set to init the new set
-	first = new Node<T>;
-	first->next = NULL;
-	if (!(s.first->next))//if the set to be copied is empty
+	head = new Node<T>;
+	head->next = NULL;
+	if (!(s.head->next))//if the set to be copied is empty
 	{
-		first->next = NULL;
+		head->next = NULL;
 	}
 	else
 	{
-		Node<T> *stemp = s.first;
+		Node<T> *stemp = s.head;
 		while (stemp->next)
 		{
 			stemp = stemp->next;
 			Node<T> *temp = new Node<T>;
 			temp->data = stemp->data;
 			temp->next = NULL;//set the end of pointer field NULL.
-			if (first->next == NULL)
+			if (head->next == NULL)
 			{
-				first->next = temp;
+				head->next = temp;
 			}
 			else
 			{
-				temp->next = first->next;//head insert
-				first->next = temp;
+				temp->next = head->next;//head insert
+				head->next = temp;
 			}
 		}
 	}
@@ -234,13 +232,13 @@ bool set<T>::equals(set<T> s)
 	if (this->length() != s.length())
 		return false;
 
-	Node<T> *temp = this->first;
-	Node<T> *stemp = s.first;
+	Node<T> *temp = this->head;
+	Node<T> *stemp = s.head;
 	//for each element of this set,find the same element in s,if not return false,else continue.
 	while (temp->next)
 	{
 		temp = temp->next;
-		stemp = s.first;
+		stemp = s.head;
 		while (stemp->next)
 		{
 			stemp = stemp->next;
@@ -258,13 +256,13 @@ set<T>::~set()
 {	//the destructor 
 	//free memories.
 	Node<T> *temp;
-	while (first->next)
+	while (head->next)
 	{
-		temp = first->next;
-		first->next = temp->next;
+		temp = head->next;
+		head->next = temp->next;
 		delete temp;
 	}
-	delete first;
+	delete head;
 }
 
 template <typename T>
@@ -274,13 +272,13 @@ bool set<T>::clearSet()
 	if (this->isEmpty())
 		return true;
 	Node<T>* temp;
-	while (first->next)
+	while (head->next)
 	{
-		temp = first->next;
-		first->next = temp->next;
+		temp = head->next;
+		head->next = temp->next;
 		delete temp;
 	}
-	if (first->next == NULL)
+	if (head->next == NULL)
 		return true;
 	else
 		return false;
@@ -290,7 +288,7 @@ template <typename T>
 bool set<T>::isEmpty()
 {	//judge whether the set is empty.
 	//if the set is a empty set return true,else return false.
-	if (this->first->next == NULL)
+	if (this->head->next == NULL)
 		return true;
 	else
 		return false;
@@ -302,7 +300,7 @@ int set<T>::length()
 	//return the number:count
 	int count = 0;
 	Node<T>* temp;
-	temp = first->next;
+	temp = head->next;
 	while (temp)
 	{
 		count++;
@@ -315,13 +313,13 @@ template <typename T>
 void set<T>::viewSetElem()
 {	//this function is used for viewing the set's element.
 	//I use it to test my functions.
-	//this requires the << overloaded.
+	//this requires the stream operator << overloaded.
 	if (this->isEmpty())
 	{
 		cout << "the set is empty." << endl;
 		return;
 	}
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	while (temp->next != NULL)
 	{
 		temp = temp->next;
@@ -339,7 +337,7 @@ T set<T>::getElem(int i)
 	//check weather the i passed in is legal.
 	if (i<1 || i>this->length())
 		exit(0);
-	Node<T>* temp = first;
+	Node<T>* temp = head;
 	while (i > 0)
 	{
 		temp = temp->next;
@@ -359,8 +357,8 @@ bool set<T>::addElem(T data)
 	Node<T> *temp = new Node<T>;
 	temp->data = data;
 	//add the node to set.
-	temp->next = first->next;
-	this->first->next = temp;
+	temp->next = head->next;
+	this->head->next = temp;
 	return true;
 }
 
@@ -377,14 +375,14 @@ void set<T>::addElem(T data[], int n)
 		temp->next = NULL;
 		temp->data = data[i];
 
-		if (first->next == NULL)
+		if (head->next == NULL)
 		{
-			first->next = temp;
+			head->next = temp;
 		}
 		else
 		{
-			temp->next = first->next;
-			first->next = temp;
+			temp->next = head->next;
+			head->next = temp;
 		}
 	}
 }
@@ -399,7 +397,7 @@ bool set<T>::deleteElem(T data)
 	if (!(this->searchElem(data)))
 		return true;
 
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	while (temp->next)
 	{
 		if (data == temp->next->data)
@@ -424,7 +422,7 @@ void set<T>::deleteElemByIndex(int index)
 	if (this->isEmpty())
 		return;
 
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	while (--index != 0)
 	{
 		temp = temp->next;
@@ -440,7 +438,7 @@ bool set<T>::searchElem(T data)
 	//if yes return true,else return false.
 	if (isEmpty())
 		return false;
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -455,7 +453,7 @@ void set<T>::updateElem(T oldValue, T newValue)
 {	//update the set's element.
 	if (this->isEmpty())
 		return;
-	Node<T> *temp = first->next;
+	Node<T> *temp = head->next;
 	while (oldValue != temp->data&&temp->next != NULL)
 	{
 		temp = temp->next;
@@ -477,7 +475,7 @@ void set<T>::updateElemByIndex(int index, T newValue)
 		return;
 	if (this->isEmpty())//
 		return;
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	do
 	{
 		temp = temp->next;
@@ -499,7 +497,7 @@ void set<T>::erase(int begin, int end)
 		return;
 	}
 	int count = 0;
-	Node<T>* temp = first;
+	Node<T>* temp = head;
 	while (temp->next)
 	{
 		count++;
@@ -521,7 +519,7 @@ void set<T>::eraseNElem(int begin, int n)
 	if (begin<1||n>this->length()||begin+n>this->length())
 		return;
 	int count = 0;
-	Node<T>* temp = first;
+	Node<T>* temp = head;
 	while (temp->next)
 	{
 		count++;
@@ -540,11 +538,11 @@ void set<T>::eraseNElem(int begin, int n)
 
 template <typename T>
 void set<T>::eraseFirst()
-{	//delete the first element
+{	//delete the head element
 	if (this->isEmpty())
 		return;
-	Node<T> *temp = first->next;
-	first->next = temp->next;
+	Node<T> *temp = head->next;
+	head->next = temp->next;
 	delete temp;
 }
 
@@ -553,7 +551,7 @@ void set<T>::eraseLast()
 {	//delete the last element
 	if (this->isEmpty())
 		return;
-	Node<T> *temp = first;
+	Node<T> *temp = head;
 	while (temp->next->next)
 	{
 		temp = temp->next;
@@ -566,15 +564,15 @@ void set<T>::eraseLast()
 template <typename T>
 T set<T>::getMaxElem()
 {	//return the biggest element of the set.
-	//this function requires the operator > for the element overloaded.
+	//this function requires the operator < for the element overloaded.
 	if (this->isEmpty())
-		exit(0);
-	Node<T> *temp = first->next;
+		return NULL;
+	Node<T> *temp = head->next;
 	T max = temp->data;
 	while (temp->next)
 	{
 		temp = temp->next;
-		max = max > temp->data ? max : temp->data;
+		max = temp->data < max ? max : temp->data;
 	}
 	return max;
 }
@@ -582,15 +580,15 @@ T set<T>::getMaxElem()
 template <typename T>
 T set<T>::getMinElem()
 {	//return the smallest element of the set.
-	//this function requires the operator > for the element overloaded.
+	//this function requires the operator < for the element overloaded.
 	if (this->isEmpty())
 		exit(0);
-	Node<T> *temp = first->next;
+	Node<T> *temp = head->next;
 	T min = temp->data;
 	while (temp->next)
 	{
 		temp = temp->next;
-		min = temp->data>min ? min : temp->data;
+		min = min<temp->data ? min : temp->data;
 	}
 	return min;
 }
@@ -600,9 +598,9 @@ bool set<T>::sortAsc()
 {	//sort the set in ascending order
 	//this function requires the operator < for the element overloaded.
 	if (this->isEmpty())
-		exit(0);
+		return true;
 
-	Node<T> *i = first->next;
+	Node<T> *i = head->next;
 	while (i&&i->next)
 	{
 		Node<T> *j = i->next;
@@ -626,9 +624,9 @@ bool set<T>::sortDsc()
 {	//sort the set in descending order
 	//this function requires the operator < for the element overloaded.
 	if (this->isEmpty())
-		exit(0);
+		return true;
 
-	Node<T> *i = first->next;
+	Node<T> *i = head->next;
 	while (i&&i->next)
 	{
 		Node<T> *j = i->next;
@@ -654,7 +652,7 @@ T* set<T>::toArray()
 		return NULL;
 
 	T* array = new T[this->length()];
-	Node<T> *temp = this->first->next;
+	Node<T> *temp = this->head->next;
 	for (int i = 0; i < this->length(); i++)
 	{
 		array[i] = temp->data;
@@ -667,10 +665,10 @@ template <typename T>
 void set<T>::toArray(T* arr)
 {	//copy the array which storage all the elements in the set to arr.
 	if (this->isEmpty())
-		return;
+		return;	
 	delete[] arr;
 	arr = new T[this->length()];
-	Node<T> *temp = this->first->next;
+	Node<T> *temp = this->head->next;
 	for (int i = 0; i < this->length(); i++)
 	{
 		arr[i] = temp->data;
@@ -685,12 +683,12 @@ bool set<T>::belongsTo(set<T> s)
 	if (this->length() > s.length())
 		return false;
 
-	Node<T> *temp = this->first;
-	Node<T> *stemp = s.first;
+	Node<T> *temp = this->head;
+	Node<T> *stemp = s.head;
 	while (temp->next)
 	{
 		temp = temp->next;
-		stemp = s.first;
+		stemp = s.head;
 		while (stemp->next)
 		{
 			stemp = stemp->next;
@@ -723,7 +721,7 @@ void IntersectionSet(set<T> a, set<T> b, set<T>& c)
 	{
 		c.clearSet();
 	}
-	Node<T> *temp = a.getFirst();
+	Node<T> *temp = a.getHead();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -751,7 +749,7 @@ void unionSet(set<T> a, set<T> b, set<T>& c)
 	}
 
 	c = a;
-	Node<T>* temp = b.getFirst();
+	Node<T>* temp = b.getHead();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -779,7 +777,7 @@ void diffSet(set<T> a, set<T> b, set<T>& c)
 	}
 
 	c = a;
-	Node<T>* temp = b.getFirst();
+	Node<T>* temp = b.getHead();
 	while (temp->next)
 	{
 		temp = temp->next;
@@ -806,7 +804,7 @@ void complementSet(set<T> u, set<T> s, set<T>& c)
 		return;
 	}
 	c = u;
-	Node<T>* temp = s.getFirst();
+	Node<T>* temp = s.getHead();
 	while (temp->next)
 	{
 		temp = temp->next;

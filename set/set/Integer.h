@@ -12,10 +12,7 @@ public:
 	bool operator==(Integer I);
 	bool operator==(int i);
 	bool operator!=(Integer I);
-	bool operator>(Integer I);
-	bool operator>=(Integer I);
 	bool operator<(Integer I);
-	bool operator<=(Integer I);
 
 	friend ostream& operator << (ostream& os, Integer& I);
 

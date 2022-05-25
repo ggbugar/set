@@ -51,33 +51,9 @@ bool Integer::operator!=(Integer I)
 		return true;
 }
 
-bool Integer::operator>(Integer I)
-{
-	if (this->integer > I.getInteger())
-		return true;
-	else
-		return false;
-}
-
-bool Integer::operator>=(Integer I)
-{
-	if (this->integer >= I.getInteger())
-		return true;
-	else
-		return false;
-}
-
 bool Integer::operator<(Integer I)
 {
 	if (this->integer < I.getInteger())
-		return true;
-	else
-		return false;
-}
-
-bool Integer::operator<=(Integer I)
-{
-	if (this->integer <= I.getInteger())
 		return true;
 	else
 		return false;
