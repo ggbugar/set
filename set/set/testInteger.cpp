@@ -1,5 +1,8 @@
 #include "Integer.h"
 #include "set.h"
+/*
+
+*/
 
 void main(){
 	cout << "functions test:" << endl;
@@ -49,15 +52,21 @@ void main(){
 		cout << "s2 is a empty set." << endl;
 	else
 		cout << "s2 isn't a empty set." << endl;
-	//Integer length();//return the number of elements in the set
-	cout << "s3 has " << s3.length() << " elements" << endl;
+	//Integer size();//return the number of elements in the set
+	cout << "s3 has " << s3.size() << " elements" << endl;
 	//T getElem(Integer i);//return the no.i element
 	cout << "s3:";
-	for (int i = 1; i <= s3.length(); i++)
+	for (int i = 1; i <= s3.size(); i++)
 	{
 		cout << s3.getElem(i) << " ";
 	}
 	cout << endl;
+	//T getFirst();get the first element of the set
+	//T getLast();get the last element of the set
+	cout << "s3:";
+	cout << "s3.getFirst():" << s3.getFirst() << endl;
+	cout << "s3:";
+	cout << "s3.getLast():" << s3.getLast() << endl;
 	//void viewSetElem();//view set's all elements
 	cout << "s1:"; s1.viewSetElem();
 	//bool addElem(T data);//add a element
@@ -69,7 +78,7 @@ void main(){
 	//bool deleteElem(T data);//delete a element
 	s1.deleteElem(1);
 	cout << "s1:"; s1.viewSetElem();
-	//void deleteElemByIndex(Integer index);//delete a element by index
+	//T deleteElemByIndex(Integer index);//delete a element by index
 	s1.deleteElemByIndex(9);
 	cout << "s1:"; s1.viewSetElem();
 	//bool searchElem(T data);//check whether the element in the set
@@ -115,7 +124,7 @@ void main(){
 	//T* toArray();//converse the set into a array,return the array
 	Integer* toarr = s5.toArray();
 	cout << "toarr:";
-	for (int i = 0; i < s5.length(); i++)
+	for (int i = 0; i < s5.size(); i++)
 	{
 		cout << toarr[i] << " ";
 	}
@@ -126,7 +135,7 @@ void main(){
 	//void toArray(T* arr);//converse the set into a array,copy it to the arr.
 	s5.toArray(toarr);
 	cout << "toarr:";
-	for (int i = 0; i < s5.length(); i++)
+	for (int i = 0; i < s5.size(); i++)
 	{
 		cout << toarr[i] << " ";
 	}
@@ -168,4 +177,5 @@ void main(){
 	cout << "the complement of A with respect to U:"; C.viewSetElem();
 	complementSet<Integer>(U, B, C);
 	cout << "the complement of B with respect to U:"; C.viewSetElem();
+
 }
