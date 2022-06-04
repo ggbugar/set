@@ -97,6 +97,13 @@ void main(){
 	//void updateElemByIndex(Integer index, T newValue);//update the no.i element
 	s3.updateElemByIndex(10, 1000);
 	cout << "s3:"; s3.viewSetElem();
+	//bool isValidIndex(int index);//judge whether a index is valid or not,the valid index range from 1 to this.size()
+	if (s3.isValidIndex(100))
+		cout << "s3:100 is a valid index for s3" << endl;
+	else
+		cout << "s3:100 is not a valid index for s3" << endl;
+	//int indexOf(T e);//return the index of the element e passed in
+	cout << "s3:the index of 9 is:" << s3.indexOf(Integer(9)) << endl;
 	//void erase(Integer begin, Integer end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
 	s3.erase(1, 3);
 	cout << "s3:"; s3.viewSetElem();
@@ -152,6 +159,11 @@ void main(){
 	cout << "B:"; B.viewSetElem();
 	set<Integer> C;
 	cout << "C:"; C.viewSetElem();
+	//bool contains(T e);
+	if (A.contains(Integer(2)))
+		cout << "A contains 2" << endl;
+	else
+		cout << "A does not contain 2" << endl;
 	//bool belongsTo(set<T> s);
 	if (B.belongsTo(U))//true
 		cout << "B belongs to U." << endl;
@@ -161,8 +173,8 @@ void main(){
 		cout << "B belongs to A." << endl;
 	else
 		cout << "B does not belong to A." << endl;
-	//friend void IntersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
-	IntersectionSet<Integer>(A, B, C);
+	//friend void intersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
+	intersectionSet<Integer>(A, B, C);
 	cout << "the intersection set of A and B:"; C.viewSetElem();
 	//extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	unionSet<Integer>(A, B, C);

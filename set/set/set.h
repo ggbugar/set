@@ -88,7 +88,7 @@ public:
 	T getElem(int i);//return the no.i element
 	T getFirst();//get the first element of the set
 	T getLast();//get the last element of the set
-
+	
 	//add delete search update
 	bool addElem(T data);//add a element
 	void addElem(T data[], int n);//add element with a array.
@@ -99,6 +99,8 @@ public:
 	void updateElemByIndex(int index, T newValue);//update the no.i element
 
 	//additional operations
+	bool isValidIndex(int index);//judge whether a index is valid or not,the valid index range from 1 to this.size()
+	int indexOf(T e);//return the index of the element e passed in
 	void erase(int begin, int end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
 	void eraseNElem(int begin, int n);//delete n elements from begin to begin+n;[begin,begin+n)
 	void eraseFirst();//delete the head element of the set
@@ -109,12 +111,14 @@ public:
 	bool sortDsc();//sort the set in descending order
 	T* toArray();//converse the set into a array,return the array
 	void toArray(T* arr);//converse the set into a array,copy it to the arr.
-
+	
 	//set operations:
+	//contains,equals searchElem(T data)
+	bool contains(T e);//the relationship of "U contains e,e belongs to U"
 	//belong to
 	bool belongsTo(set<T> s);//"belongs to" ;a subset of
 	//intersection set of a set
-	friend void IntersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
+	friend void intersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
 	//union set of a set
 	extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	//intersection set of a set
@@ -489,6 +493,27 @@ void set<T>::updateElemByIndex(int index, T newValue){
 }
 
 template <typename T>
+bool set<T>::isValidIndex(int index){
+	//judge whether a index is valid or not,the valid index range from 1 to this.size()
+	return index >= 1 && index <= this->size();
+}
+
+template <typename T>
+int set<T>::indexOf(T e){
+	//return the index of the element e passed in
+	if (!searchElem(e))
+		return -1;
+	int index = 0;
+	Node<T> *temp = head;
+	do 
+	{
+		temp = temp->next;
+		index++;
+	} while (e!=temp->data);
+	return index;
+}
+
+template <typename T>
 void set<T>::erase(int begin, int end){
 	//delete the element int [begin,end]
 	if (begin<1 || begin>this->size() || end<1 || end>this->size())
@@ -668,6 +693,20 @@ void set<T>::toArray(T* arr)
 }
 
 template <typename T>
+bool set<T>::contains(T e){
+	//judge whether the set contains the element e
+	if (isEmpty())
+		return false;
+	Node<T> *temp = head;
+	while (temp->next){
+		temp = temp->next;
+		if (e == temp->data)
+			return true;
+	}
+	return false;
+}
+
+template <typename T>
 bool set<T>::belongsTo(set<T> s){
 	//represent the relationship of belong to and included in.
 	//if the set belongs to s return true,else return false.
@@ -691,7 +730,7 @@ bool set<T>::belongsTo(set<T> s){
 }
 
 template <typename T>
-void IntersectionSet(set<T> a, set<T> b, set<T>& c){	
+void intersectionSet(set<T> a, set<T> b, set<T>& c){	
 	//c=a^b
 	//call:Intersection<T>(s,b,c)
 	//you must add<T>,the T is the type of the data in the set
