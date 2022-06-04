@@ -1,5 +1,8 @@
 #include "Integer.h"
 #include "set.h"
+/*
+
+*/
 
 void main(){
 	cout << "functions test:" << endl;
@@ -49,15 +52,21 @@ void main(){
 		cout << "s2 is a empty set." << endl;
 	else
 		cout << "s2 isn't a empty set." << endl;
-	//Integer length();//return the number of elements in the set
-	cout << "s3 has " << s3.length() << " elements" << endl;
+	//Integer size();//return the number of elements in the set
+	cout << "s3 has " << s3.size() << " elements" << endl;
 	//T getElem(Integer i);//return the no.i element
 	cout << "s3:";
-	for (int i = 1; i <= s3.length(); i++)
+	for (int i = 1; i <= s3.size(); i++)
 	{
 		cout << s3.getElem(i) << " ";
 	}
 	cout << endl;
+	//T getFirst();get the first element of the set
+	//T getLast();get the last element of the set
+	cout << "s3:";
+	cout << "s3.getFirst():" << s3.getFirst() << endl;
+	cout << "s3:";
+	cout << "s3.getLast():" << s3.getLast() << endl;
 	//void viewSetElem();//view set's all elements
 	cout << "s1:"; s1.viewSetElem();
 	//bool addElem(T data);//add a element
@@ -69,7 +78,7 @@ void main(){
 	//bool deleteElem(T data);//delete a element
 	s1.deleteElem(1);
 	cout << "s1:"; s1.viewSetElem();
-	//void deleteElemByIndex(Integer index);//delete a element by index
+	//T deleteElemByIndex(Integer index);//delete a element by index
 	s1.deleteElemByIndex(9);
 	cout << "s1:"; s1.viewSetElem();
 	//bool searchElem(T data);//check whether the element in the set
@@ -88,13 +97,20 @@ void main(){
 	//void updateElemByIndex(Integer index, T newValue);//update the no.i element
 	s3.updateElemByIndex(10, 1000);
 	cout << "s3:"; s3.viewSetElem();
+	//bool isValidIndex(int index);//judge whether a index is valid or not,the valid index range from 1 to this.size()
+	if (s3.isValidIndex(100))
+		cout << "s3:100 is a valid index for s3" << endl;
+	else
+		cout << "s3:100 is not a valid index for s3" << endl;
+	//int indexOf(T e);//return the index of the element e passed in
+	cout << "s3:the index of 9 is:" << s3.indexOf(Integer(9)) << endl;
 	//void erase(Integer begin, Integer end);//delete the element between index i and index ,j:[i,j] which will delete j-i+1 elements 
 	s3.erase(1, 3);
 	cout << "s3:"; s3.viewSetElem();
 	//void eraseNElem(Integer begin, Integer n);//delete n elements from begin to begin+n;[begin,begin+n)
 	s3.eraseNElem(3, 3);
 	cout << "s3:"; s3.viewSetElem();
-	//void eraseFirst();//delete the first element of the set
+	//void eraseFirst();//delete the head element of the set
 	s3.eraseFirst();
 	cout << "s3:"; s3.viewSetElem();
 	//void eraseLast();//delete the last element of the set
@@ -115,7 +131,7 @@ void main(){
 	//T* toArray();//converse the set into a array,return the array
 	Integer* toarr = s5.toArray();
 	cout << "toarr:";
-	for (int i = 0; i < s5.length(); i++)
+	for (int i = 0; i < s5.size(); i++)
 	{
 		cout << toarr[i] << " ";
 	}
@@ -126,7 +142,7 @@ void main(){
 	//void toArray(T* arr);//converse the set into a array,copy it to the arr.
 	s5.toArray(toarr);
 	cout << "toarr:";
-	for (int i = 0; i < s5.length(); i++)
+	for (int i = 0; i < s5.size(); i++)
 	{
 		cout << toarr[i] << " ";
 	}
@@ -143,6 +159,11 @@ void main(){
 	cout << "B:"; B.viewSetElem();
 	set<Integer> C;
 	cout << "C:"; C.viewSetElem();
+	//bool contains(T e);
+	if (A.contains(Integer(2)))
+		cout << "A contains 2" << endl;
+	else
+		cout << "A does not contain 2" << endl;
 	//bool belongsTo(set<T> s);
 	if (B.belongsTo(U))//true
 		cout << "B belongs to U." << endl;
@@ -152,8 +173,8 @@ void main(){
 		cout << "B belongs to A." << endl;
 	else
 		cout << "B does not belong to A." << endl;
-	//friend void IntersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
-	IntersectionSet<Integer>(A, B, C);
+	//friend void intersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
+	intersectionSet<Integer>(A, B, C);
 	cout << "the intersection set of A and B:"; C.viewSetElem();
 	//extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	unionSet<Integer>(A, B, C);
@@ -168,4 +189,5 @@ void main(){
 	cout << "the complement of A with respect to U:"; C.viewSetElem();
 	complementSet<Integer>(U, B, C);
 	cout << "the complement of B with respect to U:"; C.viewSetElem();
+
 }
