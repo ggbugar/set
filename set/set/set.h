@@ -16,6 +16,7 @@ class set
 private:
 	Node<T> *head;//A head node that does not hold data elements	
 public:
+	//init
 	set();//constructor with no parameter
 	set(T data[], int n);//construct set with a array
 	set(const set& s);//copy constructor,you can init a set by copying another set
@@ -120,11 +121,11 @@ public:
 	//intersection set of a set
 	friend void intersectionSet(set<T> a, set<T> b, set<T>& c);//intersection:c = a ^ b
 	//union set of a set
-	extern friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
+	friend void unionSet(set<T> a, set<T> b, set<T>& c);//union set:c = a U b
 	//intersection set of a set
-	extern friend void diffSet(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
+	friend void diffSet(set<T> a, set<T> b, set<T>& c);//Difference set:c = a - b
 	//complement set of a set
-	extern friend void complementSet(set<T> u, set<T> s, set<T>& c);//Difference set:c = U - s
+	friend void complementSet(set<T> u, set<T> s, set<T>& c);//Difference set:c = U - s
 	
 };
 
